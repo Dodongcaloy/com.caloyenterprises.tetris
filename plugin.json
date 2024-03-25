@@ -1,0 +1,6 @@
+{
+  "Name": "TetrisPlugin",
+  "Package": "com.tetrisgame.plugin",
+  "Description": "Tetris Bonus Game",
+  "Version": "0.0.1"
+}
