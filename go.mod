@@ -1,3 +1,5 @@
-module github.com/your-account/my-plugin-XVlBzgba
+module github.com/Dodongcaloy/com.caloyenterprises.tetris
 
 go 1.19
+
+
