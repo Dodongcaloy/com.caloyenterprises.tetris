@@ -16,8 +16,8 @@ func Init(api sdkplugin.PluginApi) {
 	// define the portal route
 	api.Http().VueRouter().PortalItemsFunc(func(clnt sdkconnmgr.ClientDevice) []sdkhttp.VuePortalItem {
 		portalItem := sdkhttp.VuePortalItem{
-			Label:     "welcome",
-			RouteName: "portal.welcome",
+			Label:     "Play TETRIS",
+			RouteName: "portal.tetris",
 			//RouteParams: map[string]string{"name": "CALOY"},
 		}
 		return []sdkhttp.VuePortalItem{portalItem}
@@ -26,9 +26,9 @@ func Init(api sdkplugin.PluginApi) {
 	// define the portal route
 
 	portalRoute := sdkhttp.VuePortalRoute{
-		RouteName: "portal.welcome",
-		RoutePath: "/welcome",
-		Component: "portal/welcome.vue",
+		RouteName: "portal.tetris",
+		RoutePath: "/tetris",
+		Component: "portal/tetris.vue",
 		HandlerFunc: func(w http.ResponseWriter, r *http.Request) {
 			// params := api.Http().MuxVars(r)
 			name := "CALOY"
