@@ -1,8 +1,10 @@
 <template>
-    <div id="background" >
-       Score : <div id="score">0</div> 
-      <canvas id="gameborder"  width="300" height="600"> </canvas> 
-      <!-- <canvas id="myCanvas" width="300" height="150" style="border:1px solid grey"></canvas> -->
+    <div  >
+         SCORE : <div id="score">0</div> 
+        <canvas id = "gameborder"  width="600" height="900">
+        <img id = "background" src= '<% .Helpers.AssetPath "icons/mountain.jpg" %>'> 
+
+        </canvas> 
 
     </div>
     
@@ -21,45 +23,52 @@
         template: template,
         mounted: function(){
 
-          const canvas = document.getElementById("gameborder");
-          const ctx = canvas.getContext("2d");
+          const cvs = document.getElementById("gameborder");
+          const ctx = cvs.getContext("2d");
          
-          const SQ = 30;
-          const ROW = 20;
+          const SQ = 60;
+          const ROW = 15;
           const COLUMN = 10;
-          const VACANT = "white";
-  
+          const VACANT = "pink";
+          const bg  = document.getElementById("background");
 
 
           function drawSquare(x,y,color){
             ctx.fillStyle = color;
             ctx.fillRect(x*SQ, y*SQ, SQ, SQ);
-            ctx.strokeStyle = "black";
+            ctx.strokeStyle = "white";
             ctx.strokeRect(x*SQ, y*SQ, SQ, SQ);
           }
 
-
-          // let board = [];
-
-          // for (r=0; r<ROW ; r++){
-          //   board[r] = [];
-          //   for(c =0; c < COLUMN; c++){
-          //       board[r][c] = VACANT;
-          //   }
-          // }
-
-          // function drawBoard(){
-          //   for(r=0; r<ROW ; r++){
-          //     for (r=0; r<COLUMN; r++){
-          //       drawSquare(c,r,board[r][c]);
-          //     }
-          //   }
-          // }
           
-          // drawBoard()
+          
+          // ctx.drawImage(bg,0,0,600,900);
+          // drawSquare(0,0,VACANT);
 
- 
-        }
+
+          let board = [];
+
+          for (r=0; r<ROW ; r++){
+            board[r] = [];
+            for(c =0; c < COLUMN; c++){
+                board[r][c] = VACANT;
+            }
+          }
+
+          function drawBoard(){
+            for(r=0; r<ROW ; r++){
+              for (c=0; c<COLUMN; c++){
+                drawSquare(c,r,board[r][c]);
+              }
+            }
+          }
+          
+          drawBoard();
+        
+
+
+          
+          }
      }
     
     
@@ -76,7 +85,7 @@
 
  #gameborder{
 
-    border: 1px  solid black;
+    border: 1px  solid white;
     
    
  }
