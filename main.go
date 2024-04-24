@@ -23,7 +23,7 @@ func Init(api sdkplugin.PluginApi) {
 	api.Http().VueRouter().PortalItemsFunc(func(clnt sdkconnmgr.ClientDevice) []sdkhttp.VuePortalItem {
 		portalItem := sdkhttp.VuePortalItem{
 			IconPath:  "icons/tetris.png",
-			Label:     "Play TETRIS",
+			Label:     "TETRIS",
 			RouteName: "portal.tetris",
 			// RouteParams: map[string]string{},
 		}
