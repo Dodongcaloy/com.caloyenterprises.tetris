@@ -27,6 +27,7 @@
 
               const cvs = document.getElementById("gameborder");
               const ctx = cvs.getContext("2d");
+              const scoreElement = document.getElementById("score");
             
               const SQ = 30;
               const COLUMN = COL = 10;
