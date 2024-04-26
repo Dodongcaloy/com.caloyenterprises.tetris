@@ -1,10 +1,15 @@
-<template>
-    <div  >
+<template >
+
+    <div  id="wrapper">
+         <!-- PLAYER : <div id="player">x</div> -->
          SCORE : <div id="score">0</div> 
         <canvas id = "gameborder"  width="300" height="600">
-        <img id = "background" src= '<% .Helpers.AssetPath "icons/mountain.jpg" %>'> 
+        
 
         </canvas> 
+
+        PLAYER: <div id="player">name</div>
+        <h1 id="result"></h1>
 
     </div>
     
@@ -27,7 +32,9 @@
 
               const cvs = document.getElementById("gameborder");
               const ctx = cvs.getContext("2d");
+
               const scoreElement = document.getElementById("score");
+              const resultELement = document.getElementById("result");
             
               const SQ = 30;
               const COLUMN = COL = 10;
@@ -364,6 +371,15 @@
 
               let score = 0;
 
+              //end the game
+            
+              function endGame(){
+                  gameOver = true;
+                  resultELement.innerHTML = "GAME OVER!";
+
+                  // alert("Game Over");
+              }
+
               Piece.prototype.lock = function(){
                   for( r = 0; r < this.activeTetromino.length; r++){
                       for(c = 0; c < this.activeTetromino.length; c++){
@@ -373,9 +389,7 @@
                           }
                           // pieces to lock on top = game over
                           if(this.y + r < 0){
-                              alert("Game Over");
-                              // stop request animation frame
-                              gameOver = true;
+                              endGame();
                               break;
                           }
                          
@@ -489,6 +503,8 @@
 
               drop();
 
+              
+
               console.log(score);
 
 
@@ -519,33 +535,76 @@
 
 <style>
 
- #gameborder{
 
-    border: 1px  solid white;
+
+#wrapper{
+
+  position: fixed;
+  width: 100%;
+
+}
+
+
+
+ #gameborder{
+  
+    border: none;
+    box-sizing: content-box;
  
-    
-   
  }
 
 
 
- #score{
-            display: inline-block;
-            color: red;
-        }
-        div{
-            font-size: 25px;
-            font-weight: bold;
-            font-family: monospace;
-            text-align: center;
-           
-        }
-        canvas{
-            display: block;
-            margin: 0 auto;
-            border: 20 px solid black;
-            
-        }
+#score{
+
+    display: inline-block;
+     color: red;
+}
+
+
+div{
+
+    font-size: 25px;
+    font-weight: bold;
+    font-family: monospace;
+    text-align: center;
+       
+}
+
+canvas{
+    display: block;
+    margin: 0 auto;
+    border: 20 px solid black;
+}
+
+#player{
+    display: inline-block;
+     color: red;
+}
+
+
+div{
+
+    font-size: 25px;
+    font-weight: bold;
+    font-family: monospace;
+    text-align: center;
+       
+}
+
+canvas{
+display: block;
+margin: 0 auto;
+border: 20 px solid black;
+
+
+}
+        
+#result{
+
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
 
 
 </style>
