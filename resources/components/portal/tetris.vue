@@ -1,16 +1,20 @@
 <template >
 
     <div  id="wrapper">
-         <!-- PLAYER : <div id="player">x</div> -->
-         SCORE : <div id="score">0</div> 
+         
+         <div id="SCORE NAME">SCORE : <div id="score">0</div> </div>
+         <br>
         <canvas id = "gameborder"  width="300" height="600">
         
 
         </canvas> 
-
-        PLAYER: <div id="player">name</div>
-        <h1 id="result"></h1>
-
+         
+         <br>
+         <button id="restart" type="button" class="btn btn-success" >PLAY AGAIN</button> 
+         <button id="pause" type="button" class="btn btn-success">PAUSE</button>
+         <br>
+         <h1 id="result"></h1>
+        
     </div>
     
 </template>
@@ -32,15 +36,17 @@
 
               const cvs = document.getElementById("gameborder");
               const ctx = cvs.getContext("2d");
-
               const scoreElement = document.getElementById("score");
               const resultELement = document.getElementById("result");
+              const pause = document.getElementById("pause");
+
+              
             
               const SQ = 30;
               const COLUMN = COL = 10;
               const ROW = 20;
               const VACANT = "pink";
-              const bg  = document.getElementById("background");
+              
 
 
               function drawSquare(x,y,color){
@@ -49,11 +55,6 @@
                 ctx.strokeStyle = "white";
                 ctx.strokeRect(x*SQ, y*SQ, SQ, SQ);
               }
-
-              
-              
-              //        
-              // drawSquare(0,0,"black");
 
       
               let board = [];
@@ -417,7 +418,7 @@
                               board[0][c] = VACANT;
                           }
                           // increment the score
-                          score += 10;
+                          score += 10;  
                       }
                   }
                   // update the board
@@ -467,6 +468,7 @@
               document.addEventListener("keydown",CONTROL);
 
               function CONTROL(event){
+                if (!isPaused) {
                   if(event.keyCode == 37){
                       p.moveLeft();
                       p.moveDown();
@@ -483,32 +485,46 @@
                       p.moveDown();
                       p.moveDown();
                   }
+                }
               }
-
-              // drop the piece every 1sec
 
               let dropStart = Date.now();
               let gameOver = false;
-              function drop(){
-                  let now = Date.now();
-                  let delta = now - dropStart;
-                  if(delta > 1000){
-                      p.moveDown();
-                      dropStart = Date.now();
-                  }
-                  if( !gameOver){
-                      requestAnimationFrame(drop);
+              let isPaused = false; // Flag to track if the game is paused or not
+
+              function drop() {
+                  if (!isPaused) { // Check if the game is not paused
+                      let now = Date.now();
+                      let delta = now - dropStart;
+                      if (delta > 1000) {
+                          p.moveDown();
+                          dropStart = Date.now();
+                      }
+                      if (!gameOver) {
+                          requestAnimationFrame(drop);
+                      }
                   }
               }
 
               drop();
 
-              
+              const pauseButton = document.getElementById("pause");
 
-              console.log(score);
-
-
-
+              pauseButton.addEventListener("click", () => {
+                  isPaused = !isPaused; // Toggle the pause state
+                  if (isPaused) {
+                      // Game is paused, so cancel animation frame
+                      cancelAnimationFrame(drop);
+                      // Change button text to "Play"
+                      pauseButton.textContent = "RESUME";
+                  } else {
+                      // Game is resumed, so restart animation frame
+                      dropStart = Date.now();
+                      drop();
+                      // Change button text to "Pause"
+                      pauseButton.textContent = "PAUSE";
+                  }
+              });
 
             
     
@@ -558,24 +574,12 @@
 #score{
 
     display: inline-block;
-     color: red;
+    color: red;
+   
+
 }
 
 
-div{
-
-    font-size: 25px;
-    font-weight: bold;
-    font-family: monospace;
-    text-align: center;
-       
-}
-
-canvas{
-    display: block;
-    margin: 0 auto;
-    border: 20 px solid black;
-}
 
 #player{
     display: inline-block;
@@ -605,6 +609,25 @@ border: 20 px solid black;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
+#pause{
+  background-color: yellowgreen;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  
+}
 
+#restart{
+  background-color: yellowgreen;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+
+}
+button:hover{
+  cursor: pointer;
+}
 
 </style>
