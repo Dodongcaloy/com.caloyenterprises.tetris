@@ -2,18 +2,43 @@
 
     <div  id="wrapper">
          
-         <div id="SCORE NAME">SCORE : <div id="score">0</div> </div>
+         <div id="scoretag">
+            SCORE : <div id="score">0 </div> 
+            HI-SCORE : <div id="hiscore">0</div> 
+        </div>
+        <canvas id = "gameborder"  width="300" height="600"></canvas> 
          <br>
-        <canvas id = "gameborder"  width="300" height="600">
-        
+         <div>
+            <button id="restart" type="button" class="btn btn-success" >RESTART</button> 
+            <button id="pause" type="button" class="btn btn-success shadow-none">PAUSE</button>
+        </div>
+        <br>
+         <div>
+          <h1 id="result"></h1>
+            <button id="arrowup" type="button" class="btn btn-success shadow-none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"/>
+                </svg>
+            </button>
+            <br>
+            <button id="arrowleft" type="button" class="btn btn-success shadow-none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+                </svg>
+            </button>
 
-        </canvas> 
+            <button id="down" type="button" class="btn btn-success shadow-none btn-circle btn-xl">DROP</button>
+           
+            <button id="arrowright" type="button" class="btn btn-success shadow-none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" stroke-width="2" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
+                </svg>
+            </button>
+            <br>
          
-         <br>
-         <button id="restart" type="button" class="btn btn-success" >PLAY AGAIN</button> 
-         <button id="pause" type="button" class="btn btn-success">PAUSE</button>
-         <br>
-         <h1 id="result"></h1>
+          </div>
+
+        
         
     </div>
     
@@ -38,43 +63,58 @@
               const ctx = cvs.getContext("2d");
               const scoreElement = document.getElementById("score");
               const resultELement = document.getElementById("result");
-              const pause = document.getElementById("pause");
-
-              
-            
+              const pauseButton = document.getElementById("pause");
+              const restart = document.getElementById("restart");
+              const arrowleft = document.getElementById("arrowleft");
+              const down = document.getElementById("down");
+              const arrowright = document.getElementById("arrowright");
+              const arrowup = document.getElementById("arrowup");
               const SQ = 30;
               const COLUMN = COL = 10;
               const ROW = 20;
               const VACANT = "pink";
+
+              let gameOver = false;
               
 
 
               function drawSquare(x,y,color){
-                ctx.fillStyle = color;
-                ctx.fillRect(x*SQ, y*SQ, SQ, SQ);
-                ctx.strokeStyle = "white";
-                ctx.strokeRect(x*SQ, y*SQ, SQ, SQ);
+               
+                if(!gameOver){
+                  ctx.fillStyle = color;
+                  ctx.fillRect(x*SQ, y*SQ, SQ, SQ);
+                  ctx.strokeStyle = "white";
+                  ctx.strokeRect(x*SQ, y*SQ, SQ, SQ);
+                }
+
               }
+
 
       
               let board = [];
 
               for (r=0; r<ROW ; r++){
+
                 board[r] = [];
                 for(c =0; c < COL; c++){
                     board[r][c] = VACANT;
                 }
+
               }
 
               function drawBoard(){
+
                 for(r=0; r<ROW ; r++){
                   for (c=0; c<COL; c++){
                     drawSquare(c,r,board[r][c]);
                   }
                 }
               }
-              
+
               drawBoard();
+
+
+            
 
               const Z = [ 
                 
@@ -284,7 +324,7 @@
                   
                   // we need to control the pieces
                   this.x = 4;
-                  this.y = -2;
+                  this.y = -4;
               }
 
               // fill function
@@ -327,6 +367,21 @@
                   }
                   
               }
+
+              //drop the piece
+
+              Piece.prototype.dropDown = function(){
+                  while (!this.collision(0, 1, this.activeTetromino)) {
+                      this.unDraw();
+                      this.y++;
+                      this.draw();
+                  }
+                  
+                  // lock the piece and generate a new one
+                  this.lock();
+                  p = randomPiece();
+              }
+
 
               // move Right the piece
               Piece.prototype.moveRight = function(){
@@ -376,6 +431,11 @@
             
               function endGame(){
                   gameOver = true;
+                  pauseButton.style.display = "none";
+                  down.style.display = "none";
+                  arrowleft.style.display = "none";
+                  arrowup.style.display = "none";
+                  arrowright.style.display = "none";
                   resultELement.innerHTML = "GAME OVER!";
 
                   // alert("Game Over");
@@ -482,14 +542,13 @@
                       p.moveDown();
                       dropStart = Date.now();
                   }else if(event.keyCode == 40){
-                      p.moveDown();
-                      p.moveDown();
+                      p.dropDown();
+                      dropStart = Date.now();
                   }
                 }
               }
 
               let dropStart = Date.now();
-              let gameOver = false;
               let isPaused = false; // Flag to track if the game is paused or not
 
               function drop() {
@@ -508,7 +567,7 @@
 
               drop();
 
-              const pauseButton = document.getElementById("pause");
+            
 
               pauseButton.addEventListener("click", () => {
                   isPaused = !isPaused; // Toggle the pause state
@@ -516,25 +575,60 @@
                       // Game is paused, so cancel animation frame
                       cancelAnimationFrame(drop);
                       // Change button text to "Play"
-                      pauseButton.textContent = "RESUME";
+                      pauseButton.textContent = "Press to CONTINUE";
+                      pauseButton.style.backgroundColor = "gray";
+                      
+                     
                   } else {
                       // Game is resumed, so restart animation frame
                       dropStart = Date.now();
                       drop();
                       // Change button text to "Pause"
                       pauseButton.textContent = "PAUSE";
+                      pauseButton.style.backgroundColor = "yellowgreen";
+                    
                   }
               });
 
-            
-    
 
-           
-         
+              function resetGame() {
+                window.location.reload();
+              }
+                  
+              restart.addEventListener("click", resetGame);
 
-       
-        
+              arrowleft.addEventListener("click",() =>{
+                if(!isPaused){
+                  p.moveLeft();
+                  p.moveDown();
+                  dropStart = Date.now();
+                }
+              });
 
+              down.addEventListener("click",() =>{
+                if(!isPaused){
+                  p.dropDown();
+                  dropStart = Date.now();
+                }
+              });
+
+              arrowright.addEventListener("click",() =>{
+                if(!isPaused){
+                  p.moveRight();
+                  p.moveDown();
+                  dropStart = Date.now();
+                }
+              });
+
+              arrowup.addEventListener("click",() =>{
+                if(!isPaused){
+                  p.rotate();
+                  p.moveDown();
+                  dropStart = Date.now();
+                }
+              });
+
+              
           
           }
      }
@@ -551,39 +645,55 @@
 
 <style>
 
-
+html, body{
+  overflow-y: hidden;
+  border: 10px black;
+}
 
 #wrapper{
 
-  position: fixed;
-  width: 100%;
+    position: fixed;
+    width: 100%;
 
 }
 
 
 
- #gameborder{
+#gameborder{
   
     border: none;
     box-sizing: content-box;
  
- }
+}
+
+#scoretag{
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif ;
+    -webkit-text-stroke: 1px whitesmoke;
+
+  }
+
+
 
 
 
 #score{
 
     display: inline-block;
-    color: red;
+    color: yellowgreen;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif ;
    
 
 }
 
 
+#hiscore{
 
-#player{
     display: inline-block;
-     color: red;
+    color: yellowgreen;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif ;
 }
 
 
@@ -591,9 +701,33 @@ div{
 
     font-size: 25px;
     font-weight: bold;
-    font-family: monospace;
     text-align: center;
+    font-family: "Lucida Console", "Courier New", monospace
        
+}
+
+
+#pause{
+  background-color: yellowgreen;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  
+}
+
+
+
+#restart{
+  background-color: yellowgreen;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+
+}
+button:hover{
+  cursor: pointer;
 }
 
 canvas{
@@ -607,27 +741,37 @@ border: 20 px solid black;
 #result{
 
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-}
-
-#pause{
-  background-color: yellowgreen;
-  border: none;
-  border-radius: 10px;
-  padding: 10px;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  -webkit-text-stroke: 1px whitesmoke;
   
 }
 
-#restart{
-  background-color: yellowgreen;
-  border: none;
-  border-radius: 10px;
-  padding: 10px;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+#arrowup{
+ background-color: yellowgreen;
+ font-size: large;
+}
 
+#arrowleft{
+  background-color: yellowgreen;
 }
-button:hover{
-  cursor: pointer;
+
+#down{
+  background-color: yellowgreen;
 }
+
+#arrowright{
+  background-color: yellowgreen;
+}
+
+#down{
+  background-color: yellowgreen;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+ 
+}
+
+.btn-circle.btn-xl {
+			padding: 13px 13px;
+			border-radius: 60px;
+			
+		}
 
 </style>
