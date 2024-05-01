@@ -3,25 +3,21 @@
     <div  id="wrapper">
          
          <div id="scoretag">
-            SCORE : <div id="score">0 </div> 
-            HI-SCORE : <div id="hiscore">0</div> 
+              SCORE : <div id="score">0</div> 
+              HI-SCORE : <div id="hiscore">0</div> 
         </div>
         <canvas id = "gameborder"  width="300" height="600"></canvas> 
-         <br>
          <div>
-            <button id="restart" type="button" class="btn btn-success" >RESTART</button> 
-            <button id="pause" type="button" class="btn btn-success shadow-none">PAUSE</button>
+            <button id="restart" type="button" class="btn btn-success btn-lrg" >RESTART</button> 
+            <button id="pause" type="button" class="btn btn-success btn-lrg shadow-none">PAUSE</button>
         </div>
-        <br>
          <div>
           <h1 id="result"></h1>
-            <button id="arrowup" type="button" class="btn btn-success shadow-none">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
-                  <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"/>
-                </svg>
-            </button>
+            <button id="spin" type="button" class="btn btn-success btn-lg shadow-none">ROTATE</button>
+            
+            
             <br>
-            <button id="arrowleft" type="button" class="btn btn-success shadow-none">
+            <button id="arrowleft" type="button" class="btn btn-success btn-lg shadow-none">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
                   <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
                 </svg>
@@ -29,7 +25,7 @@
 
             <button id="down" type="button" class="btn btn-success shadow-none btn-circle btn-xl">DROP</button>
            
-            <button id="arrowright" type="button" class="btn btn-success shadow-none">
+            <button id="arrowright" type="button" class="btn btn-success btn-lg shadow-none">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" stroke-width="2" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
                 </svg>
@@ -68,7 +64,7 @@
               const arrowleft = document.getElementById("arrowleft");
               const down = document.getElementById("down");
               const arrowright = document.getElementById("arrowright");
-              const arrowup = document.getElementById("arrowup");
+              const spin = document.getElementById("spin");
               const SQ = 30;
               const COLUMN = COL = 10;
               const ROW = 20;
@@ -426,6 +422,7 @@
               }
 
               let score = 0;
+             
 
               //end the game
             
@@ -434,8 +431,9 @@
                   pauseButton.style.display = "none";
                   down.style.display = "none";
                   arrowleft.style.display = "none";
-                  arrowup.style.display = "none";
+                  spin.style.display = "none";
                   arrowright.style.display = "none";
+                  restart.innerHTML = "PLAY AGAIN";
                   resultELement.innerHTML = "GAME OVER!";
 
                   // alert("Game Over");
@@ -523,6 +521,8 @@
                   return false;
               }
 
+              
+
               // CONTROL the piece
 
               document.addEventListener("keydown",CONTROL);
@@ -534,6 +534,7 @@
                       p.moveDown();
                       dropStart = Date.now();
                   }else if(event.keyCode == 38){
+                      
                       p.rotate();
                       p.moveDown();
                       dropStart = Date.now();
@@ -620,7 +621,7 @@
                 }
               });
 
-              arrowup.addEventListener("click",() =>{
+              spin.addEventListener("click",() =>{
                 if(!isPaused){
                   p.rotate();
                   p.moveDown();
@@ -671,7 +672,7 @@ html, body{
     border-radius: 10px;
     padding: 10px;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif ;
-    -webkit-text-stroke: 1px whitesmoke;
+    -webkit-text-stroke: 1px solid black;
 
   }
 
@@ -682,27 +683,29 @@ html, body{
 #score{
 
     display: inline-block;
-    color: yellowgreen;
+    color: green;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif ;
-   
-
+    margin-right: 20px;
+    
 }
+
 
 
 #hiscore{
 
     display: inline-block;
-    color: yellowgreen;
+    color: brown;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif ;
 }
 
 
 div{
-
+    margin-top: 10px;
+    margin-bottom: 10px;
+    line-height: 10px;
     font-size: 25px;
     font-weight: bold;
     text-align: center;
-    font-family: "Lucida Console", "Courier New", monospace
        
 }
 
@@ -724,6 +727,7 @@ div{
   border-radius: 10px;
   padding: 10px;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  margin-right: 15px;
 
 }
 button:hover{
@@ -739,38 +743,47 @@ border: 20 px solid black;
 }
         
 #result{
-
+  color: tomato;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  -webkit-text-stroke: 1px whitesmoke;
+  -webkit-text-stroke: solid black;
   
 }
 
-#arrowup{
- background-color: yellowgreen;
+#spin{
+ background-color: gray;
  font-size: large;
+ font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+ border-radius: 10px;
+ border:gray;
 }
 
 #arrowleft{
-  background-color: yellowgreen;
+  background-color: gray;
+  border-radius: 10px;
+  border:gray;
+  padding: 15px 20px 10px 20px;
+  font-weight: bold;
 }
 
-#down{
-  background-color: yellowgreen;
-}
 
 #arrowright{
-  background-color: yellowgreen;
+  background-color: gray;
+  border-radius: 10px;
+  border: gray;
+  padding: 15px 20px 10px 20px;
+  font-weight: bold;
 }
 
 #down{
-  background-color: yellowgreen;
+  background-color: gray;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
- 
+  border-radius: 15px;
+  border: gray;
 }
 
 .btn-circle.btn-xl {
-			padding: 13px 13px;
-			border-radius: 60px;
+      padding: 15px 20px 10px 20px;
+			border-radius: 15px;
 			
 		}
 
