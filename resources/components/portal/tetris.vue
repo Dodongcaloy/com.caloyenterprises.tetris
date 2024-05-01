@@ -422,7 +422,22 @@
               }
 
               let score = 0;
-             
+              let speed = 900; // Initial speed (milliseconds)
+
+              // Function to check and increase speed
+              function increaseSpeed() {
+                  if (score % 1000 === 0) {
+                      speed -= 150; // Increase speed by 10%
+                  }
+              }
+
+              // Update score function (assuming it increments score)
+              function updateScore() {
+                score += 100; // Increment score
+                if (score % 1000 === 0) {
+                    increaseSpeed(); 
+                }
+              }
 
               //end the game
             
@@ -457,6 +472,8 @@
                           
                       }
                   }
+                  
+
                   // remove full rows
                   for(r = 0; r < ROW; r++){
                       let isRowFull = true;
@@ -475,8 +492,11 @@
                           for( c = 0; c < COL; c++){
                               board[0][c] = VACANT;
                           }
+
                           // increment the score
-                          score += 10;  
+                          updateScore();
+                        
+
                       }
                   }
                   // update the board
@@ -534,7 +554,6 @@
                       p.moveDown();
                       dropStart = Date.now();
                   }else if(event.keyCode == 38){
-                      
                       p.rotate();
                       p.moveDown();
                       dropStart = Date.now();
@@ -556,7 +575,7 @@
                   if (!isPaused) { // Check if the game is not paused
                       let now = Date.now();
                       let delta = now - dropStart;
-                      if (delta > 1000) {
+                      if (delta > speed) {
                           p.moveDown();
                           dropStart = Date.now();
                       }
