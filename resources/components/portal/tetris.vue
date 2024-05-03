@@ -1,12 +1,15 @@
 <template >
 
     <div  id="wrapper">
-         
+         <h1 id="level"></h1>
          <div id="scoretag">
               SCORE : <div id="score">0</div> 
               HI-SCORE : <div id="hiscore">0</div> 
-        </div>
-        <canvas id = "gameborder"  width="300" height="600"></canvas> 
+        </div id="canvas">
+       
+        <canvas id = "gameborder"  width="300" height="600"></canvas>
+        <canvas id="mini-canvas" width="120" height="120"></canvas>
+        
          <div>
             <button id="restart" type="button" class="btn btn-success btn-lrg" >RESTART</button> 
             <button id="pause" type="button" class="btn btn-success btn-lrg shadow-none">PAUSE</button>
@@ -57,6 +60,8 @@
 
               const cvs = document.getElementById("gameborder");
               const ctx = cvs.getContext("2d");
+              const level = document.getElementById("level");
+              const scoretag = document.getElementById("scoretag");
               const scoreElement = document.getElementById("score");
               const resultELement = document.getElementById("result");
               const pauseButton = document.getElementById("pause");
@@ -68,7 +73,7 @@
               const SQ = 30;
               const COLUMN = COL = 10;
               const ROW = 20;
-              const VACANT = "pink";
+              const VACANT = "wheat";
 
               let gameOver = false;
               
@@ -424,11 +429,12 @@
               let score = 0;
               let speed = 900; // Initial speed (milliseconds)
 
-              // Function to check and increase speed
+              // Function to check and increase speed by 20%
               function increaseSpeed() {
                   if (score % 1000 === 0) {
-                      speed -= 150; // Increase speed by 10%
+                      speed *= 0.80;
                   }
+
               }
 
               // Update score function (assuming it increments score)
@@ -677,56 +683,71 @@ html, body{
 
 }
 
-
-
-#gameborder{
-  
-    border: none;
-    box-sizing: content-box;
- 
-}
-
 #scoretag{
     border: none;
     border-radius: 10px;
     padding: 10px;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif ;
-    -webkit-text-stroke: 1px solid black;
+    font-family: 'arial', bold;
+    font-weight: bold;
+    color:whitesmoke;
+    background-color:tan;
+    display: inline-block;
 
   }
 
+  #score{
 
+display: inline-block;
+color:aquamarine;
+font-family:'arial', bold;
+margin-right: 20px;
 
-
-
-#score{
-
-    display: inline-block;
-    color: green;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif ;
-    margin-right: 20px;
-    
 }
 
 
 
 #hiscore{
 
-    display: inline-block;
-    color: brown;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif ;
+display: inline-block;
+color:Maroon;
+font-family: 'arial', bold ;
+font-weight: 2000px ;
 }
 
 
 div{
-    margin-top: 10px;
-    margin-bottom: 10px;
-    line-height: 10px;
-    font-size: 25px;
-    font-weight: bold;
-    text-align: center;
-       
+margin-top: 10px;
+margin-bottom: 10px;
+line-height: 10px;
+font-size: 25px;
+font-weight: bold;
+text-align: center;
+   
 }
+
+#canvas{
+    display: flex; 
+     position: relative;
+}
+
+
+#gameborder{
+  
+    border: 20px gray;
+    border-radius: 5px;
+    box-sizing: content-box;
+    width: 300px; /* Set the width of the main canvas */
+    height: 600px;
+    display: flex;
+ 
+}
+
+#mini-canvas{
+    display:inline-block;
+    width: 120px; /* Set the width of the mini canvas */
+    height: 120px;
+}
+
 
 
 #pause{
@@ -754,7 +775,7 @@ button:hover{
 }
 
 canvas{
-display: block;
+display: inline-block;
 margin: 0 auto;
 border: 20 px solid black;
 
