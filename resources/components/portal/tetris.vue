@@ -1,44 +1,46 @@
 <template >
 
     <div  id="wrapper">
-         <h1 id="level"></h1>
-         <div id="scoretag">
+
+    
+      <div id="scoretag">
               SCORE : <div id="score">0</div> 
               HI-SCORE : <div id="hiscore">0</div> 
-        </div id="canvas">
-       
-        <canvas id = "gameborder"  width="300" height="600"></canvas>
-        <canvas id="mini-canvas" width="120" height="120"></canvas>
+        </div >
+
+        <canvas id = "gameborder"  width="600px" height="1200px">
+       </canvas>
+
+         
         
-         <div>
+
+        <div>
             <button id="restart" type="button" class="btn btn-success btn-lrg" >RESTART</button> 
             <button id="pause" type="button" class="btn btn-success btn-lrg shadow-none">PAUSE</button>
-        </div>
-         <div>
-          <h1 id="result"></h1>
-            <button id="spin" type="button" class="btn btn-success btn-lg shadow-none">ROTATE</button>
-            
-            
-            <br>
-            <button id="arrowleft" type="button" class="btn btn-success btn-lg shadow-none">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
-                  <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
-                </svg>
-            </button>
+        </div> 
 
-            <button id="down" type="button" class="btn btn-success shadow-none btn-circle btn-xl">DROP</button>
-           
-            <button id="arrowright" type="button" class="btn btn-success btn-lg shadow-none">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" stroke-width="2" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
-                </svg>
-            </button>
-            <br>
-         
-          </div>
+        <h1 id="result"></h1>
 
-        
-        
+        <button id="spin" type="button" class="btn btn-success btn-lg shadow-none">ROTATE</button>
+                          
+        <br>
+
+       <button id="arrowleft" type="button" class="btn btn-success btn-lg shadow-none">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+              </svg>
+        </button>
+
+        <button id="down" type="button" class="btn btn-success shadow-none btn-circle btn-xl">DROP</button>
+                  
+        <button id="arrowright" type="button" class="btn btn-success btn-lg shadow-none">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" stroke-width="2" d="M1 8a.5.5 0 0 1 .5-.5h10.793l-2.147-2.146a.5.5 0 1 1 .708-.708l3.5 3.5a.5.5 0 0 1 0 .708l-3.5 3.5a.5.5 0 1 1-.708-.708L12.293 9H1.5A.5.5 0 0 1 1 8z"/>
+              </svg>
+        </button>
+   
+  
+       
     </div>
     
 </template>
@@ -54,14 +56,15 @@
 
     return {
         template: template,
+
+        
         mounted: function(){
 
+          
            
 
               const cvs = document.getElementById("gameborder");
               const ctx = cvs.getContext("2d");
-              const level = document.getElementById("level");
-              const scoretag = document.getElementById("scoretag");
               const scoreElement = document.getElementById("score");
               const resultELement = document.getElementById("result");
               const pauseButton = document.getElementById("pause");
@@ -70,10 +73,10 @@
               const down = document.getElementById("down");
               const arrowright = document.getElementById("arrowright");
               const spin = document.getElementById("spin");
-              const SQ = 30;
+              const SQ = 60;
               const COLUMN = COL = 10;
               const ROW = 20;
-              const VACANT = "wheat";
+              const VACANT = "#22242A";
 
               let gameOver = false;
               
@@ -84,7 +87,7 @@
                 if(!gameOver){
                   ctx.fillStyle = color;
                   ctx.fillRect(x*SQ, y*SQ, SQ, SQ);
-                  ctx.strokeStyle = "white";
+                  ctx.strokeStyle = "#1C1E22";
                   ctx.strokeRect(x*SQ, y*SQ, SQ, SQ);
                 }
 
@@ -296,13 +299,13 @@
             // the pieces and their colors
 
             const PIECES = [
-                [Z,"brown"],
-                [I,"green"],
-                [J,"gold"],
-                [T,"grey"],
-                [L,"skyblue"],
-                [O,"black"],
-                [S,"orange"],
+                [Z,"#EE4266"],
+                [I,"#8DECB4"],
+                [J,"#FF9800"],
+                [T,"#9F70FD"],
+                [L,"#387ADF"],
+                [O,"#FFDB5C"],
+                [S,"yellowgreen"],
             ];
 
             // generate random pieces
@@ -352,7 +355,38 @@
 
               Piece.prototype.unDraw = function(){
                   this.fill(VACANT);
+
               }
+
+
+              function drawSilhouette() {
+                  // Save the current position of the piece
+                  let originalX = p.x;
+                  let originalY = p.y;
+
+                  // Move the piece down until it collides with something
+                  while (!p.collision(0, 1, p.activeTetromino)) {
+                      p.y++;
+                  }
+
+                  // Draw the silhouette at the current position
+                  p.fill("whitesmoke");
+
+                  // Restore the original position of the piece
+                  p.x = originalX;
+                  p.y = originalY;
+              }
+
+             
+              Piece.prototype.unDrawSilhouette = function() {
+                  let silhouetteY = this.y;
+                  while (!this.collision(0, 1, this.activeTetromino)) {
+                      this.y++;
+                  }
+                  // Undraw the bottom part of the silhouette
+                  this.fill(VACANT);
+                  this.y = silhouetteY;
+              };
 
               // move Down the piece
 
@@ -360,6 +394,7 @@
                   if(!this.collision(0,1,this.activeTetromino)){
                       this.unDraw();
                       this.y++;
+                      drawSilhouette();
                       this.draw();
                   }else{
                       // we lock the piece and generate a new one
@@ -375,6 +410,7 @@
                   while (!this.collision(0, 1, this.activeTetromino)) {
                       this.unDraw();
                       this.y++;
+                      drawSilhouette();
                       this.draw();
                   }
                   
@@ -387,6 +423,7 @@
               // move Right the piece
               Piece.prototype.moveRight = function(){
                   if(!this.collision(1,0,this.activeTetromino)){
+                      this.unDrawSilhouette();
                       this.unDraw();
                       this.x++;
                       this.draw();
@@ -396,6 +433,7 @@
               // move Left the piece
               Piece.prototype.moveLeft = function(){
                   if(!this.collision(-1,0,this.activeTetromino)){
+                      this.unDrawSilhouette();
                       this.unDraw();
                       this.x--;
                       this.draw();
@@ -418,6 +456,7 @@
                   }
                   
                   if(!this.collision(kick,0,nextPattern)){
+                      this.unDrawSilhouette();
                       this.unDraw();
                       this.x += kick;
                       this.tetrominoN = (this.tetrominoN + 1)%this.tetromino.length; // (0+1)%4 => 1
@@ -602,7 +641,7 @@
                       cancelAnimationFrame(drop);
                       // Change button text to "Play"
                       pauseButton.textContent = "Press to CONTINUE";
-                      pauseButton.style.backgroundColor = "gray";
+                      pauseButton.style.backgroundColor = "#F5DD61";
                       
                      
                   } else {
@@ -655,6 +694,8 @@
               });
 
               
+
+              
           
           }
      }
@@ -671,14 +712,22 @@
 
 <style>
 
+
+
+
 html, body{
-  overflow-y: hidden;
-  border: 10px black;
+  
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
 }
 
 #wrapper{
-
-    position: fixed;
+    
+    position: relative;
+    height: 100vh;
     width: 100%;
 
 }
@@ -697,10 +746,10 @@ html, body{
 
   #score{
 
-display: inline-block;
-color:aquamarine;
-font-family:'arial', bold;
-margin-right: 20px;
+    display: inline-block;
+    color:aquamarine;
+    font-family:'arial', bold;
+    margin-right: 20px;
 
 }
 
@@ -708,54 +757,46 @@ margin-right: 20px;
 
 #hiscore{
 
-display: inline-block;
-color:Maroon;
-font-family: 'arial', bold ;
-font-weight: 2000px ;
+    display: inline-block;
+    color:Maroon;
+    font-family: 'arial', bold ;
+    font-weight: 2000px ;
 }
 
 
 div{
-margin-top: 10px;
-margin-bottom: 10px;
-line-height: 10px;
-font-size: 25px;
-font-weight: bold;
-text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    line-height: 10px;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
    
-}
-
-#canvas{
-    display: flex; 
-     position: relative;
 }
 
 
 #gameborder{
-  
-    border: 20px gray;
-    border-radius: 5px;
-    box-sizing: content-box;
-    width: 300px; /* Set the width of the main canvas */
-    height: 600px;
-    display: flex;
- 
+  border-radius: 5px;
+  border: 2px solid black;
+  max-width: 80vw;
+  max-height: 60vh;
+  margin-bottom: 10px;
 }
 
-#mini-canvas{
-    display:inline-block;
-    width: 120px; /* Set the width of the mini canvas */
-    height: 120px;
+.controls {
+  display: absolute;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
 }
-
-
 
 #pause{
   background-color: yellowgreen;
   border: none;
   border-radius: 10px;
   padding: 10px;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-family: 'arial', bold;
+  font-weight: bold;
   
 }
 
@@ -766,8 +807,8 @@ text-align: center;
   border: none;
   border-radius: 10px;
   padding: 10px;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  margin-right: 15px;
+  font-family: 'arial', bold;
+  font-weight: bold;
 
 }
 button:hover{
@@ -784,7 +825,8 @@ border: 20 px solid black;
         
 #result{
   color: tomato;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-family: 'arial', bold;
+  font-weight: bold;
   -webkit-text-stroke: solid black;
   
 }
@@ -792,7 +834,8 @@ border: 20 px solid black;
 #spin{
  background-color: gray;
  font-size: large;
- font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+ font-family: 'arial', bold;
+ font-weight: bold;
  border-radius: 10px;
  border:gray;
 }
@@ -802,6 +845,8 @@ border: 20 px solid black;
   border-radius: 10px;
   border:gray;
   padding: 15px 20px 10px 20px;
+  font-weight: bold;
+  font-family: 'arial', bold;
   font-weight: bold;
 }
 
@@ -816,7 +861,8 @@ border: 20 px solid black;
 
 #down{
   background-color: gray;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-family: 'arial', bold;
+  font-weight: bold;
   border-radius: 15px;
   border: gray;
 }
@@ -825,6 +871,40 @@ border: 20 px solid black;
       padding: 15px 20px 10px 20px;
 			border-radius: 15px;
 			
-		}
+}
+
+
+
+@media screen and (max-width: 768px) {
+  #scoretag, #result {
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  #scoretag, #result {
+    font-size: 25px;
+  }
+
+  canvas#gameborder {
+    max-width: 90vw;
+    max-height: 50vh;
+  }
+
+  .btn-xl {
+    padding: 10px 15px;
+  }
+
+  .btn-circle {
+    padding: 15px;
+  }
+}
+
 
 </style>
+
+
+ 
+
+
+</styl>
