@@ -370,7 +370,7 @@
                   }
 
                   // Draw the silhouette at the current position
-                  p.fill("whitesmoke");
+                  p.fill("gray");
 
                   // Restore the original position of the piece
                   p.x = originalX;
@@ -495,8 +495,8 @@
                   arrowright.style.display = "none";
                   restart.innerHTML = "PLAY AGAIN";
                   resultELement.innerHTML = "GAME OVER!";
-
-                  // alert("Game Over");
+                  resultELement.classList.add("popup");
+                  resultELement.style.opacity = 1;
               }
 
               Piece.prototype.lock = function(){
@@ -741,10 +741,9 @@ html, body{
     color:whitesmoke;
     background-color:tan;
     display: inline-block;
+}
 
-  }
-
-  #score{
+#score{
 
     display: inline-block;
     color:aquamarine;
@@ -827,9 +826,15 @@ border: 20 px solid black;
   color: tomato;
   font-family: 'arial', bold;
   font-weight: bold;
-  -webkit-text-stroke: solid black;
-  
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
 }
+
+#result.popup {
+    animation: popup 2s ease-in-out;
+}
+
+
 
 #spin{
  background-color: gray;
@@ -884,20 +889,25 @@ border: 20 px solid black;
 @media screen and (max-width: 576px) {
   #scoretag, #result {
     font-size: 25px;
-  }
+}
 
-  canvas#gameborder {
+#result {
+    font-size: 30px;
+}
+
+canvas#gameborder {
     max-width: 90vw;
-    max-height: 50vh;
-  }
+    max-height: 55vh;
+}
 
-  .btn-xl {
+.btn-xl {
     padding: 10px 15px;
-  }
+}
 
-  .btn-circle {
+.btn-circle {
     padding: 15px;
-  }
+}
+
 }
 
 
