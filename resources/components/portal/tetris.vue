@@ -78,7 +78,10 @@
               const ROW = 20;
               const VACANT = "#22242A";
 
+              let submitting = true;
               let gameOver = false;
+              let score = 0;
+              let speed = 900; // Initial speed (milliseconds)*
               
 
 
@@ -465,24 +468,31 @@
                   }
               }
 
-              let score = 0;
-              let speed = 900; // Initial speed (milliseconds)
+          
 
               // Function to check and increase speed by 20%
               function increaseSpeed() {
                   if (score % 1000 === 0) {
-                      speed *= 0.80;
+                      speed *= 0.90;
                   }
 
               }
 
               // Update score function (assuming it increments score)
               function updateScore() {
-                score += 100; // Increment score
+                score += 200; // Increment score
                 if (score % 1000 === 0) {
                     increaseSpeed(); 
                 }
               }
+
+              function lockScoreUpdate(){
+                score += 10;
+                if (score % 1000 === 0) {
+                    increaseSpeed(); 
+                }
+              }
+
 
               //end the game
             
@@ -497,6 +507,21 @@
                   resultELement.innerHTML = "GAME OVER!";
                   resultELement.classList.add("popup");
                   resultELement.style.opacity = 1;
+
+                  var formData = {
+                      Score: score
+                  };
+
+                  if (submitting) {
+                    $flare.http.post('<% .Helpers.UrlForRoute "score.save"%>', formData)
+                        .then(function(response){
+                          console.log(response);
+                        })
+                        .catch(function(error){
+                          console.log(error);
+                        });
+                        submitting = false;
+                  }
               }
 
               Piece.prototype.lock = function(){
@@ -514,6 +539,7 @@
                          
                           // we lock the piece
                           board[this.y+r][this.x+c] = this.color;
+                          lockScoreUpdate();
                           
                       }
                   }
@@ -775,6 +801,7 @@ div{
 
 
 #gameborder{
+  display: block;
   border-radius: 5px;
   border: 2px solid black;
   max-width: 80vw;
