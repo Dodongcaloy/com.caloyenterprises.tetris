@@ -5,7 +5,7 @@
     
       <div id="scoretag">
               SCORE : <div id="score">0</div> 
-              HI-SCORE : <div id="hiscore">0</div> 
+              HI-SCORE: <div id="hiscore"></div>
         </div >
 
         <canvas id = "gameborder"  width="600px" height="1200px">
@@ -66,6 +66,7 @@
               const cvs = document.getElementById("gameborder");
               const ctx = cvs.getContext("2d");
               const scoreElement = document.getElementById("score");
+              const hiscoreElement = document.getElementById("hiscore");
               const resultELement = document.getElementById("result");
               const pauseButton = document.getElementById("pause");
               const restart = document.getElementById("restart");
@@ -85,6 +86,7 @@
               
 
 
+            
               function drawSquare(x,y,color){
                
                 if(!gameOver){
@@ -121,7 +123,7 @@
               drawBoard();
 
 
-            
+               
 
               const Z = [ 
                 

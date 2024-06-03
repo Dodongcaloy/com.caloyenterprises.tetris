@@ -51,7 +51,7 @@ func Init(api sdkplugin.PluginApi) {
 		err := api.Config().Plugin(my_key).Get(&oldData)
 		if err != nil {
 			api.Http().VueResponse().Error(w, err.Error(), http.StatusInternalServerError)
-			return
+			oldData = scoreRecord{}
 		}
 
 		if data.Score >= oldData.Hiscore {
