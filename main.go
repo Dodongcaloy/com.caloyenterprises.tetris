@@ -65,7 +65,7 @@ func Init(api sdkplugin.PluginApi) {
 			return
 		}
 
-		api.Http().VueResponse().Json(w, nil, http.StatusOK)
+		api.Http().VueResponse().Json(w, oldData, http.StatusOK)
 	})
 
 	Route.Name("score.save")

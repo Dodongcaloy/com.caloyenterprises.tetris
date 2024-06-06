@@ -75,7 +75,7 @@
               const arrowright = document.getElementById("arrowright");
               const spin = document.getElementById("spin");
               const SQ = 60;
-              const COLUMN = COL = 10;
+              const COL = 10;
               const ROW = 20;
               const VACANT = "#22242A";
 
@@ -85,7 +85,29 @@
               let speed = 900; // Initial speed (milliseconds)*
               
 
+              var queryParams = {hiscore: 0};
 
+              $flare.http.post('<% .Helpers.UrlForRoute "score.save"%>', queryParams)
+                  .then(function(response){
+                      console.log(response);
+
+                      const hiscore = response.hiscore;
+        
+                      // Log the hiscore value (optional, for debugging purposes)
+                      console.log("High score:", hiscore);
+                      
+                      // Get the HTML element with the id 'hiscore'
+                      const hiscoreElement = document.getElementById('hiscore');
+                      
+                      // Update the inner text or inner HTML of the element
+                      hiscoreElement.innerText = hiscore;
+                      
+                  })
+                  .catch(function(error){
+                      console.log(error);
+                  });
+                  
+             
             
               function drawSquare(x,y,color){
                
@@ -946,4 +968,3 @@ canvas#gameborder {
  
 
 
-</styl>
